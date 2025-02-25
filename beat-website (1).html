@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Beat Website</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body, html { width: 100%; height: 100%; font-family: 'Comic Sans MS', cursive, sans-serif; overflow: hidden; }
+        
+        /* Startseite */
+        .video-container { 
+            position: fixed; 
+            width: 100%; 
+            height: 100%; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            background: black;
+        }
+        video { 
+            position: absolute; 
+            width: 100%; 
+            height: 100%; 
+            object-fit: cover; 
+            z-index: -1;
+        }
+        .enter-button { 
+            position: absolute; 
+            z-index: 10; 
+            background: rgba(255, 255, 255, 0.8); 
+            border: none; 
+            padding: 15px 30px; 
+            font-size: 20px; 
+            cursor: pointer; 
+            transition: 0.3s;
+            display: none;
+        }
+        .enter-button:hover { background: white; }
+
+        /* Beats-Seite */
+        .beat-page { 
+            display: none; 
+            background: black; 
+            width: 100%; 
+            height: 100vh; 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            justify-content: center; 
+            color: white;
+        }
+        .beat-list { display: none; }
+        .beat-list p { 
+            cursor: pointer; 
+            font-size: 24px; 
+            margin: 15px 0; 
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    
+    <!-- Startseite mit Video -->
+    <div class="video-container" id="intro">
+        <video id="introVideo" autoplay muted playsinline>
+            <source src="/mnt/data/Unbenanntes_Projekt.MP4" type="video/mp4">
+        </video>
+        <button class="enter-button" id="enterButton" onclick="enterSite()">Enter</button>
+    </div>
+
+    <!-- Beats-Seite -->
+    <div class="beat-page" id="beatPage">
+        <div class="beat-list" id="beatList">
+            <p onclick="playBeat(1)">Play 1</p>
+            <p onclick="playBeat(2)">Play 2</p>
+            <p onclick="playBeat(3)">Play 3</p>
+            <p onclick="playBeat(4)">Play 4</p>
+        </div>
+        
+        <audio id="beat1" src="/mnt/data/feyn 140 yeahhh hoeee.mp3"></audio>
+        <audio id="beat2" src="/mnt/data/feyn 144 fillerrrr.mp3"></audio>
+        <audio id="beat3" src="/mnt/data/feyn 140 haftschaden.mp3"></audio>
+        <audio id="beat4" src="/mnt/data/feyn 146 techhh.mp3"></audio>
+    </div>
+    
+    <script>
+        document.getElementById('introVideo').addEventListener('ended', function() {
+            document.getElementById('enterButton').style.display = 'block';
+        });
+
+        function enterSite() {
+            document.getElementById("intro").style.display = "none";
+            document.getElementById("beatPage").style.display = "flex";
+            document.getElementById("beatList").style.display = "block";
+        }
+
+        function playBeat(number) {
+            let audio = document.getElementById(`beat${number}`);
+            if (!audio.paused) {
+                audio.pause();
+                audio.currentTime = 0;
+            } else {
+                document.querySelectorAll("audio").forEach(a => a.pause());
+                audio.play();
+            }
+        }
+    </script>
+    
+</body>
+</html>
